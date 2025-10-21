@@ -1,0 +1,20 @@
+root = true
+
+[*.js]
+# Indentation style: space / tab
+indent_style = space
+# Indentation size: 2 spaces
+indent_size = 2
+tab_width = 2
+# End-of-line character: LF
+end_of_line = lf
+# Character encoding: utf-8
+charset = utf-8
+# Trim whitespace at the end of lines
+trim_trailing_whitespace = true
+# Ensure files end with a newline
+insert_final_newline = true
+
+[*.md]
+# Markdown files can have trailing whitespace in certain scenarios (e.g., line breaks)
+trim_trailing_whitespace = false

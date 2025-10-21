@@ -1,0 +1,35 @@
+---
+include:
+  - compose.infra.yml
+
+services:
+  server:
+    profiles:
+      - backend
+      - full
+    container_name: template
+    build:
+      context: .
+      target: ${BUILD_TARGET:-dev-builder}
+      dockerfile: Dockerfile
+    command: dumb-init npm run start:dev -- --debug 0.0.0.0:${DEBUGGER_PORT}
+    image: template:local
+    ports:
+      - "${PORT}:${PORT}"
+      - "${DEBUGGER_PORT}:${DEBUGGER_PORT}"
+    volumes:
+      - .:/app
+      - /app/node_modules
+    develop:
+      watch:
+        - path: package.json
+          target: /app/package.json
+          action: rebuild
+        - path: package-lock.json
+          target: /app/package-lock.json
+          action: rebuild
+    env_file: .env
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    networks:
+      - template

@@ -1,0 +1,109 @@
+{
+  "$schema": "https://biomejs.dev/schemas/2.2.6/schema.json",
+  "vcs": {
+    "enabled": false,
+    "clientKind": "git",
+    "useIgnoreFile": false,
+    "defaultBranch": "origin/main"
+  },
+  "files": {
+    "ignoreUnknown": false,
+    "includes": [
+      "**/*.js",
+      "**/*.json",
+      "**/*.ts",
+      "!node_modules",
+      "!dist",
+      "!coverage",
+      "!src/metadata.ts"
+    ]
+  },
+  "formatter": {
+    "enabled": true,
+    "useEditorconfig": true,
+    "indentStyle": "space",
+    "formatWithErrors": true,
+    "lineWidth": 80
+  },
+  "linter": {
+    "enabled": true,
+    "rules": {
+      "recommended": true,
+      "style": {
+        "useImportType": "off",
+        "useFilenamingConvention": "warn"
+      },
+      "suspicious": {
+        "noConsole": "error",
+        "useAwait": "warn"
+      }
+    }
+  },
+  "javascript": {
+    "formatter": {
+      "enabled": true,
+      "quoteStyle": "single",
+      "semicolons": "always",
+      "trailingCommas": "all"
+    }
+  },
+  "json": {
+    "parser": {
+      "allowComments": true,
+      "allowTrailingCommas": false
+    },
+    "formatter": {
+      "trailingCommas": "none",
+      "bracketSpacing": true,
+      "expand": "auto",
+      "enabled": true
+    }
+  },
+  "assist": {
+    "enabled": true,
+    "actions": {
+      "source": {
+        "organizeImports": {
+          "level": "on",
+          "options": {
+            "groups": [
+              [
+                ":URL:",
+                ":NODE:",
+                ":BUN:",
+                ":PACKAGE_WITH_PROTOCOL:",
+                ":PACKAGE:"
+              ],
+              ":BLANK_LINE:",
+              [
+                {
+                  "type": true,
+                  "source": [
+                    "~app/**",
+                    "~domain/**",
+                    "~infra/**",
+                    "~interface/**",
+                    "~shared/**",
+                    "~mocks/**"
+                  ]
+                },
+                {
+                  "type": false,
+                  "source": [
+                    "~app/**",
+                    "~domain/**",
+                    "~infra/**",
+                    "~interface/**",
+                    "~shared/**",
+                    "~mocks/**"
+                  ]
+                }
+              ]
+            ]
+          }
+        },
+        "recommended": true
+      }
+    }
+  }
+}
