@@ -3,16 +3,18 @@ import { NestFactory } from '@nestjs/core';
 import type { NestExpressApplication } from '@nestjs/platform-express';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
+import { EnvService } from '~infra/config/env/env.service';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
 
+  const env = app.get<EnvService>(EnvService);
+
   app.useLogger(
     new ConsoleLogger({
       showHidden: true,
-      // json: env.logFormat === 'production',
-      json: false,
+      json: env.get('LOG_FORMAT') === 'json',
       logLevels: ['verbose', 'debug', 'log', 'warn', 'error', 'fatal'],
     }),
   );
