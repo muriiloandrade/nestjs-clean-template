@@ -62,7 +62,7 @@ logs-infra: ## Follow logs from infrastructure containers
 	@echo "==> Reading infra logs"
 	@docker compose --profile infra logs -f
 
-## 🏗️ Build & Deploy
+## 🏗️  Build & Deploy
 build: ## Build production Docker image
 	@echo "==> Building Docker API image"
 	@docker build --target production --rm --compress -t ${NAME}:${VERSION} .
@@ -74,6 +74,15 @@ run-network-host: build ## Run app with host networking
 run-network-compose: build start-infra ## Run app with compose networking
 	@echo "==> Running Docker API image"
 	@docker run --rm --env-file .env --network template-net -p ${PORT}:${PORT} --name ${NAME} -t ${NAME}:${VERSION}
+
+## 🗄️  DB Migrations
+new-migration: ## Create a new database migration (name=descriptive_name)
+	@echo "==> Creating new migration: $(name)"
+	@npx drizzle-kit generate --name $(name)
+
+migrate: ## Run database migrations
+	@echo "==> Running database migrations"
+	@npx drizzle-kit migrate
 
 ## 🧪 Testing
 test: ## Run tests (type=unt|int|e2e, watch=true for watch mode)
