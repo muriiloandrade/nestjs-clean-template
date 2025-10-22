@@ -3,6 +3,7 @@ import {
   Controller,
   Delete,
   Get,
+  NotFoundException,
   Param,
   Patch,
   Post,
@@ -35,7 +36,11 @@ export class UserController {
   @ApiOkResponse({ description: 'User found successfully.', type: UserDTO })
   @Get(':id')
   async findOne(@Param('id') id: string) {
-    return await this.userRepo.getUserById(id);
+    const result = await this.userRepo.getUserById(id);
+
+    if (!result) throw new NotFoundException('User not found');
+
+    return result;
   }
 
   @ApiCreatedResponse({

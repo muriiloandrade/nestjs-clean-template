@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { and, eq, ilike, isNull, SQL, sql } from 'drizzle-orm';
 
-import { NewUser, users } from '~infra/database/schema/users.schema';
+import { NewUser, User, users } from '~infra/database/schema/users.schema';
 import { DbService } from '~infra/repositories/db/db.service';
 
 @Injectable()
@@ -15,7 +15,7 @@ export class UserRepository {
     return user;
   }
 
-  async getUserById(id: string) {
+  async getUserById(id: string): Promise<User | undefined> {
     const user = await this.db
       .conn()
       .select()
