@@ -3,6 +3,7 @@ import { Module } from '@nestjs/common';
 import { APP_FILTER, RouterModule } from '@nestjs/core';
 import { PoolConfig } from 'pg';
 
+import { DB_KEY } from '~infra/config/db/constant';
 import { EnvModule } from '~infra/config/env/env.module';
 import { EnvService } from '~infra/config/env/env.service';
 import { DrizzleErrorFilter } from '~interface/framework/filters/drizzle.filter';
@@ -16,7 +17,7 @@ const declaredModules = [
   UserModule,
   DrizzlePGModule.registerAsync({
     inject: [EnvService],
-    tag: 'pg',
+    tag: DB_KEY as string,
     useFactory: (envService: EnvService) => ({
       pg: {
         connection: 'pool',
