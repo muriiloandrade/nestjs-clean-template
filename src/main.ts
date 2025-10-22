@@ -27,8 +27,8 @@ async function bootstrap() {
   );
 
   const config = new DocumentBuilder()
-    .setTitle('Wizdaa API')
-    .setDescription('API Wizdaa Documentation')
+    .setTitle('API')
+    .setDescription('API Documentation')
     .setVersion('1.0');
   // .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' });
 
