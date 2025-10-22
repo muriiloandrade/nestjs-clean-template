@@ -24,6 +24,25 @@
       "smartStep": true
     },
     {
+      "type": "node",
+      "request": "attach",
+      "name": "Debug tests",
+      "remoteRoot": "/app",
+      "localRoot": "${workspaceFolder}",
+      "port": 9229,
+      "restart": {
+        "delay": 1000,
+        "maxAttempts": 10
+      },
+      "address": "0.0.0.0",
+      "skipFiles": [
+        "<node_internals>/**",
+        "${workspaceFolder}/node_modules/**"
+      ],
+      "showAsyncStacks": false,
+      "smartStep": true
+    },
+    {
       "request": "launch",
       "name": "Debug via start:dev",
       "runtimeArgs": ["run-script", "start:dev"],
