@@ -6,6 +6,7 @@ import {
   Param,
   Patch,
   Post,
+  Query,
 } from '@nestjs/common';
 import { ApiCreatedResponse, ApiOkResponse } from '@nestjs/swagger';
 
@@ -14,6 +15,7 @@ import {
   CreateUserDTO,
   UpdateUserDTO,
   UserDTO,
+  UserFilterDTO,
 } from '~interface/dtos/user.dto';
 
 @Controller('user')
@@ -26,8 +28,8 @@ export class UserController {
     isArray: true,
   })
   @Get('')
-  async findAll() {
-    return await this.userRepo.getAllUsers();
+  async findAll(@Query() query: UserFilterDTO) {
+    return await this.userRepo.getUsersByFilter(query);
   }
 
   @ApiOkResponse({ description: 'User found successfully.', type: UserDTO })

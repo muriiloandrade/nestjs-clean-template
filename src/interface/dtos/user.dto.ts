@@ -7,6 +7,8 @@ export class UserDTO {
 
   email: string;
 
+  active: boolean;
+
   createdAt: Date;
 
   updatedAt: Date;
@@ -20,3 +22,9 @@ export class CreateUserDTO extends PickType(UserDTO, [
 ] as const) {}
 
 export class UpdateUserDTO extends PartialType(CreateUserDTO) {}
+
+export class UserFilterDTO extends PickType(PartialType(UserDTO), [
+  'name',
+  'email',
+  'active',
+] as const) {}

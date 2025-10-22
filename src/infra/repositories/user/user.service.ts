@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { eq } from 'drizzle-orm';
+import { and, eq, ilike, isNull, SQL, sql } from 'drizzle-orm';
 
 import { NewUser, users } from '~infra/database/schema/users.schema';
 import { DbService } from '~infra/repositories/db/db.service';
@@ -30,9 +30,42 @@ export class UserRepository {
     return allUsers;
   }
 
+  async getUsersByFilter(filter: Partial<NewUser>) {
+    const filters: SQL[] = [];
+
+    if (filter.name) {
+      filters.push(ilike(users.name, filter.name));
+    }
+
+    if (filter.email) {
+      filters.push(eq(users.email, filter.email));
+    }
+
+    if (filter.active !== undefined) {
+      filters.push(eq(users.active, filter.active));
+    }
+
+    const filteredUsers = await this.db
+      .conn()
+      .select()
+      .from(users)
+      .where(and(...filters));
+
+    return filteredUsers;
+  }
+
   async deleteUserById(id: string) {
     await this.db.conn().transaction(async (tx) => {
-      await tx.delete(users).where(eq(users.id, id));
+      await tx
+        .update(users)
+        .set({ deletedAt: sql`CURRENT_TIMESTAMP`, active: false })
+        .where(
+          and(
+            eq(users.id, id),
+            eq(users.active, true),
+            isNull(users.deletedAt),
+          ),
+        );
     });
     return { message: `User with id ${id} deleted successfully.` };
   }

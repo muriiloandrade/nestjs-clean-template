@@ -13,6 +13,5 @@ export const timestamps = {
   deletedAt: t.timestamp('deleted_at', {
     withTimezone: true,
     mode: 'string',
-    precision: 3,
   }),
 };
