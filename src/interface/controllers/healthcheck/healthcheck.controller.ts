@@ -6,12 +6,17 @@ import {
   HealthIndicatorResult,
 } from '@nestjs/terminus';
 
+import { DbHealthIndicator } from '~interface/framework/health-indicators/db';
+
 @ApiExcludeController()
 @Controller('health')
 export class HealthCheckController {
   private readonly appName = 'template';
 
-  constructor(private readonly healthService: HealthCheckService) {}
+  constructor(
+    private readonly healthService: HealthCheckService,
+    private readonly dbHealthIndicator: DbHealthIndicator,
+  ) {}
 
   @Get('liveness')
   @HealthCheck()
@@ -31,6 +36,7 @@ export class HealthCheckController {
       (): HealthIndicatorResult => ({
         [this.appName]: { status: 'up' },
       }),
+      async () => this.dbHealthIndicator.isHealthy('database'),
     ]);
   }
 }
