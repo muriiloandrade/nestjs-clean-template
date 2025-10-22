@@ -28,6 +28,7 @@ services:
 
 volumes:
   database:
+    name: template-database
     driver: local
   
 networks:
