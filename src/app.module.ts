@@ -1,10 +1,11 @@
 import { DrizzlePGModule } from '@knaadh/nestjs-drizzle-pg';
 import { Module } from '@nestjs/common';
-import { RouterModule } from '@nestjs/core';
+import { APP_FILTER, RouterModule } from '@nestjs/core';
 import { PoolConfig } from 'pg';
 
 import { EnvModule } from '~infra/config/env/env.module';
 import { EnvService } from '~infra/config/env/env.service';
+import { DrizzleErrorFilter } from '~interface/framework/filters/drizzle.filter';
 import { DbModule } from '~interface/modules/db.module';
 import { HealthCheckModule } from '~interface/modules/healthcheck.module';
 import { UserModule } from '~interface/modules/user.module';
@@ -59,6 +60,12 @@ const declaredModules = [
         ],
       },
     ]),
+  ],
+  providers: [
+    {
+      provide: APP_FILTER,
+      useClass: DrizzleErrorFilter,
+    },
   ],
 })
 export class AppModule {}
