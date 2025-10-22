@@ -19,6 +19,8 @@ services:
       POSTGRES_PASSWORD: ${PG_PASS:?database password required}
       POSTGRES_USER: ${PG_USER:?database user required}
       POSTGRES_DB: ${PG_DB:?database name required}
+    ports:
+      - "${PG_PORT:?database port required}:5432"
     env_file:
       - .env
     networks:
