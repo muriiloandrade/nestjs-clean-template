@@ -1,5 +1,5 @@
 /* eslint-disable */
 export default async () => {
     const t = {};
-    return { "@nestjs/swagger": { "models": [], "controllers": [[import("./interface/controllers/healthcheck/healthcheck.controller"), { "HealthCheckController": { "checkLiveness": { type: Object }, "checkReadiness": { type: Object } } }]] } };
+    return { "@nestjs/swagger": { "models": [[import("./interface/dtos/user.dto"), { "UserDTO": { id: { required: true, type: () => String }, name: { required: true, type: () => String }, email: { required: true, type: () => String }, createdAt: { required: true, type: () => Date }, updatedAt: { required: true, type: () => Date }, deletedAt: { required: false, type: () => Date } }, "CreateUserDTO": {}, "UpdateUserDTO": {} }]], "controllers": [[import("./interface/controllers/healthcheck/healthcheck.controller"), { "HealthCheckController": { "checkLiveness": { type: Object }, "checkReadiness": { type: Object } } }], [import("./interface/controllers/user/user.controller"), { "UserController": { "findAll": {}, "findOne": {}, "create": {}, "update": {}, "delete": {} } }]] } };
 };

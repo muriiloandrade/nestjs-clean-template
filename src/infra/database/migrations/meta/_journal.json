@@ -15,6 +15,13 @@
       "when": 1761100570222,
       "tag": "20251022023610_add_user_email",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "7",
+      "when": 1761104865903,
+      "tag": "20251022034745_add_user_active_flag",
+      "breakpoints": true
     }
   ]
 }

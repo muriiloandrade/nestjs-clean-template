@@ -17,6 +17,7 @@
     "strictBindCallApply": false,
     "noFallthroughCasesInSwitch": false,
     "pretty": true,
+    "strictPropertyInitialization": false,
     "paths": {
       "~app/*": ["src/app/*"],
       "~domain/*": ["src/domain/*"],

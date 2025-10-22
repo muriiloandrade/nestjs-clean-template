@@ -5,11 +5,14 @@ import { PoolConfig } from 'pg';
 
 import { EnvModule } from '~infra/config/env/env.module';
 import { EnvService } from '~infra/config/env/env.service';
+import { DbModule } from '~interface/modules/db.module';
 import { HealthCheckModule } from '~interface/modules/healthcheck.module';
+import { UserModule } from '~interface/modules/user.module';
 
 const declaredModules = [
   HealthCheckModule,
   EnvModule,
+  UserModule,
   DrizzlePGModule.registerAsync({
     inject: [EnvService],
     tag: 'pg',
@@ -35,6 +38,7 @@ const declaredModules = [
       },
     }),
   }),
+  DbModule,
 ];
 
 @Module({
@@ -44,6 +48,15 @@ const declaredModules = [
       {
         path: '',
         children: [HealthCheckModule],
+      },
+      {
+        path: '/api/v1',
+        children: [
+          {
+            path: '/users',
+            module: UserModule,
+          },
+        ],
       },
     ]),
   ],

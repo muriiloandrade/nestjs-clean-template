@@ -5,6 +5,7 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 import { EnvService } from '~infra/config/env/env.service';
 import { AppModule } from './app.module';
+import metadata from './metadata';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestExpressApplication>(AppModule);
@@ -31,16 +32,18 @@ async function bootstrap() {
     .setVersion('1.0');
   // .addBearerAuth({ type: 'http', scheme: 'bearer', bearerFormat: 'JWT' });
 
-  config.addServer(`http://localhost:3330`, 'Local');
+  const APP_PORT = env.get('PORT') ?? 3000;
+  config.addServer(`http://localhost:${APP_PORT}`, 'Local');
 
   const swaggerUrl = 'docs';
+  await SwaggerModule.loadPluginMetadata(metadata);
   const document = SwaggerModule.createDocument(app, config.build());
   SwaggerModule.setup(swaggerUrl, app, document, {
     yamlDocumentUrl: `${swaggerUrl}/yaml`,
     jsonDocumentUrl: `${swaggerUrl}/json`,
   });
 
-  await app.listen(process.env.PORT ?? 3000);
-  Logger.log(`App running on port: ${process.env.PORT ?? 3000}`);
+  await app.listen(APP_PORT);
+  Logger.log(`App running on port: ${APP_PORT}`);
 }
 bootstrap();

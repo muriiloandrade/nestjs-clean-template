@@ -1,14 +1,13 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { HealthIndicatorService } from '@nestjs/terminus';
 import { sql } from 'drizzle-orm';
-import { NodePgDatabase } from 'drizzle-orm/node-postgres';
 
-import { DbSchema } from '~infra/database/schema';
+import { DbService } from '~infra/repositories/db/db.service';
 
 @Injectable()
 export class DbHealthIndicator {
   constructor(
-    @Inject('pg') private readonly db: NodePgDatabase<DbSchema>,
+    private readonly db: DbService,
     private readonly healthIndicatorService: HealthIndicatorService,
   ) {}
 
@@ -16,7 +15,7 @@ export class DbHealthIndicator {
     const indicator = this.healthIndicatorService.check(key);
 
     try {
-      await this.db.execute(sql`SELECT 1`);
+      await this.db.conn().execute(sql`SELECT 1`);
       return indicator.up();
     } catch (error) {
       return indicator.down({ message: 'Database connection failed', error });
