@@ -7,7 +7,7 @@ services:
     profiles:
       - backend
       - full
-    container_name: template
+    container_name: template-server
     build:
       context: .
       target: ${BUILD_TARGET:-dev-builder}

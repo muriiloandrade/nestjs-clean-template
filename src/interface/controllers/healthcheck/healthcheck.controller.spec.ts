@@ -7,13 +7,13 @@ describe('HealthCheckController', () => {
   let controller: HealthCheckController;
   const outputResult: HealthCheckResult = {
     details: {
-      template: {
+      'template-api': {
         status: 'up',
       },
     },
     error: {},
     info: {
-      template: {
+      'template-api': {
         status: 'up',
       },
     },

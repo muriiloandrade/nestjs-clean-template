@@ -11,7 +11,7 @@ import { DbHealthIndicator } from '~interface/framework/health-indicators/db';
 @ApiExcludeController()
 @Controller('health')
 export class HealthCheckController {
-  private readonly appName = 'template';
+  private readonly appName = 'template-api';
 
   constructor(
     private readonly healthService: HealthCheckService,
